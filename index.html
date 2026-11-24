@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>François Parlant — outils et projets</title>
+<meta name="description" content="Formateur en bureautique, François Parlant crée avec l'IA des outils web pour enseigner, apprendre et gagner du temps : outils pédagogiques, musique, Moodle, SQL, documents.">
+<meta property="og:title" content="François Parlant — outils et projets">
+<meta property="og:description" content="Outils web pour enseigner, apprendre et gagner du temps, créés avec l'IA par un formateur. Tout fonctionne dans le navigateur.">
+<meta property="og:image" content="https://raw.githubusercontent.com/edu-fpar/capital-lab/main/capital-lab-libre.png">
+<style>
+:root {
+  --bg: #f6f7fb; --surface: #ffffff; --text: #1e2330; --muted: #5f6878; --border: #e3e6ee;
+  --accent: #4f46e5; --accent-soft: #eef0ff; --chip: #f1f3f8; --warn: #9a5b00; --warn-soft: #fff6e5;
+  --thumb: linear-gradient(135deg, #eef0ff, #f6f7fb);
+  --sidebar: 270px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141b; --surface: #1b1e27; --text: #e7e9ef; --muted: #9aa2b2; --border: #2c303c;
+    --accent: #8b87ff; --accent-soft: #25264a; --chip: #262a36; --warn: #f3b562; --warn-soft: #33270f;
+    --thumb: linear-gradient(135deg, #25264a, #1b1e27);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141b; --surface: #1b1e27; --text: #e7e9ef; --muted: #9aa2b2; --border: #2c303c;
+  --accent: #8b87ff; --accent-soft: #25264a; --chip: #262a36; --warn: #f3b562; --warn-soft: #33270f;
+  --thumb: linear-gradient(135deg, #25264a, #1b1e27);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+body { margin: 0; font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+a { color: var(--accent); }
+
+/* ---------- Barre latérale ---------- */
+.sidebar {
+  position: fixed; inset: 0 auto 0 0; width: var(--sidebar); overflow-y: auto;
+  background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem 1rem;
+}
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--text); font-weight: 800; font-size: 1.15rem; margin: 0 .5rem 1.25rem; }
+.brand span { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .6rem; background: var(--accent); color: #fff; font-size: .9rem; }
+.search { width: 100%; padding: .55rem .75rem; border: 1px solid var(--border); border-radius: .6rem; background: var(--bg); color: var(--text); font: inherit; font-size: .9rem; margin-bottom: 1rem; }
+.nav-group { margin-bottom: .75rem; }
+.nav-group > a { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); text-decoration: none; padding: .35rem .5rem; }
+.nav-group > a:hover, .nav-group > a.active { color: var(--accent); }
+.nav-group ul { list-style: none; margin: 0; padding: 0; }
+.nav-group li a { display: block; padding: .3rem .5rem .3rem 1rem; border-radius: .45rem; color: var(--text); text-decoration: none; font-size: .9rem; }
+.nav-group li a:hover { background: var(--accent-soft); color: var(--accent); }
+.nav-extra { border-top: 1px solid var(--border); margin-top: 1rem; padding-top: 1rem; }
+.nav-extra a { text-transform: none !important; letter-spacing: 0 !important; font-size: .88rem !important; font-weight: 500 !important; }
+.theme-btn { margin-top: 1rem; width: 100%; padding: .45rem; border: 1px solid var(--border); border-radius: .6rem; background: none; color: var(--muted); font: inherit; font-size: .85rem; cursor: pointer; }
+
+/* ---------- Contenu ---------- */
+main { margin-left: var(--sidebar); padding: 2.5rem clamp(1rem, 4vw, 3.5rem) 4rem; max-width: calc(var(--sidebar) + 1100px); }
+.hero h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.15; margin: 0 0 .75rem; }
+.hero .lead { font-size: 1.15rem; font-weight: 600; margin: 0 0 .75rem; max-width: 46rem; }
+.hero p { color: var(--muted); font-size: 1.05rem; margin: 0 0 1rem; max-width: 46rem; }
+.contacts { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.25rem 0 0; }
+.contacts a { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .8rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); text-decoration: none; font-size: .88rem; font-weight: 600; }
+.contacts a:hover { border-color: var(--accent); color: var(--accent); }
+.notice { display: flex; gap: .8rem; background: var(--accent-soft); border-radius: .9rem; padding: 1rem 1.2rem; margin: 1.75rem 0 2.5rem; max-width: 52rem; }
+.notice .notice-title { display: block; font-weight: 700; }
+.notice p { margin: .2rem 0 0; font-size: .95rem; }
+section { margin-bottom: 2.75rem; }
+h2 { font-size: 1.35rem; margin: 0 0 .35rem; padding-bottom: .4rem; border-bottom: 2px solid var(--border); }
+.section-intro { color: var(--muted); margin: .6rem 0 1rem; max-width: 50rem; font-size: .95rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 1rem; margin-top: 1rem; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: .9rem; overflow: hidden; display: flex; flex-direction: column; transition: border-color .15s, transform .15s; scroll-margin-top: 1rem; }
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.thumb { display: block; aspect-ratio: 16 / 9; background: var(--thumb); border-bottom: 1px solid var(--border); overflow: hidden; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.thumb .ph { width: 100%; height: 100%; display: grid; place-items: center; font-size: 2.6rem; }
+.card-body { padding: 1rem 1.2rem 1.1rem; display: flex; flex-direction: column; gap: .55rem; flex-grow: 1; }
+.card h3 { margin: 0; font-size: 1.05rem; line-height: 1.3; }
+.card h3 a { color: var(--text); text-decoration: none; }
+.card h3 a:hover { color: var(--accent); }
+.card p { margin: 0; color: var(--muted); font-size: .92rem; flex-grow: 1; }
+.chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+.chip { font-size: .72rem; background: var(--chip); color: var(--muted); padding: .15rem .55rem; border-radius: 999px; }
+.chip.edu { background: var(--accent-soft); color: var(--accent); }
+.links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: .85rem; font-weight: 600; }
+.links a { text-decoration: none; }
+.links a:hover { text-decoration: underline; }
+table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: .9rem; overflow: hidden; font-size: .92rem; margin-top: 1rem; }
+th, td { text-align: left; padding: .6rem .9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { background: var(--chip); font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+tr:last-child td { border-bottom: none; }
+footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--border); padding-top: 1.25rem; }
+.empty { color: var(--muted); font-style: italic; display: none; }
+
+/* ---------- Téléphone ---------- */
+.menu-btn { display: none; }
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); transition: transform .2s; z-index: 20; box-shadow: 0 0 40px rgba(0,0,0,.2); }
+  body.nav-open .sidebar { transform: none; }
+  main { margin-left: 0; padding-top: 4.5rem; }
+  .menu-btn { display: flex; align-items: center; gap: .5rem; position: fixed; top: .8rem; left: 1rem; z-index: 30; padding: .5rem .9rem; border-radius: .6rem; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-weight: 600; cursor: pointer; }
+  table { display: block; overflow-x: auto; }
+}
+</style>
+</head>
+<body>
+
+<button class="menu-btn" onclick="document.body.classList.toggle('nav-open')" aria-label="Menu">☰ Menu</button>
+
+<nav class="sidebar" id="sidebar">
+  <a class="brand" href="#top"><span>FP</span> François Parlant</a>
+  <input class="search" id="search" type="search" placeholder="Rechercher un projet…" aria-label="Rechercher un projet">
+  <div id="nav"></div>
+  <div class="nav-extra nav-group">
+    <a href="https://github.com/fxpar">GitHub fxpar ↗</a>
+    <a href="https://github.com/edu-fpar">GitHub edu-fpar ↗</a>
+    <a href="https://www.youtube.com/c/enparlantdebureautiqueformezvous">Chaîne YouTube ↗</a>
+    <a href="https://www.linkedin.com/in/francois-parlant/">LinkedIn ↗</a>
+    <a href="https://www.fxparlant.net/">Site personnel ↗</a>
+  </div>
+  <button class="theme-btn" id="themeBtn">◐ Thème clair / sombre</button>
+</nav>
+
+<main id="top">
+  <header class="hero">
+    <h1>Bonjour, je suis François Parlant</h1>
+    <p class="lead">Formateur en bureautique, j'utilise l'IA pour transformer des fichiers Excel et des tâches répétitives en vrais outils, sans être développeur.</p>
+    <p>J'ai appris Excel, Word et Moodle à des milliers d'étudiants et de formateurs. Aujourd'hui, je montre comment l'IA permet d'aller plus loin : partir d'un tableau ou d'un export brut, et en faire une application simple, utilisable par tous, qui tourne dans le navigateur.</p>
+    <p>Vous trouverez ici mes outils pédagogiques, mes outils pour la musique, pour Moodle et pour le SQL, et quelques projets plus personnels.</p>
+    <div class="contacts">
+      <a href="https://www.youtube.com/c/enparlantdebureautiqueformezvous">🎬 YouTube « En parlant de bureautique, formez-vous »</a>
+      <a href="https://www.linkedin.com/in/francois-parlant/">💼 LinkedIn</a>
+      <a href="https://edu-fpar.github.io/">🎓 Outils pédagogiques</a>
+      <a href="https://www.fxparlant.net/">🌐 Site personnel</a>
+      <a href="https://orcid.org/0009-0002-8059-6408">🆔 ORCID</a>
+    </div>
+  </header>
+
+  <div class="notice" id="confidentialite">
+    <div style="font-size:1.6rem">🔒</div>
+    <div>
+      <span class="notice-title">Vos fichiers restent chez vous</span>
+      <p>Mes outils web fonctionnent dans le navigateur, sans installation ni compte : les fichiers que vous y ouvrez ne sont envoyés à aucun serveur. Une idée d'outil, un besoin dans votre école ou votre organisme ? Ouvrez une <em>issue</em> sur le dépôt concerné ou écrivez-moi sur <a href="https://www.linkedin.com/in/francois-parlant/">LinkedIn</a>.</p>
+    </div>
+  </div>
+
+  <div id="projects"></div>
+  <p class="empty" id="empty">Aucun projet ne correspond à votre recherche.</p>
+
+  <footer>
+    © 2026 François Parlant · Code sur <a href="https://github.com/fxpar">github.com/fxpar</a> et <a href="https://github.com/edu-fpar">github.com/edu-fpar</a> · Chaque dépôt précise sa licence.
+  </footer>
+</main>
+
+<script>
+/* Outils pédagogiques publiés sur le compte edu-fpar (archivés sur Zenodo) */
+const EDU = [
+  { n: 'micro-learning-app', t: 'MicroLearn Studio', site: 'https://edu-fpar.github.io/micro-learning-app/', img: 'https://raw.githubusercontent.com/edu-fpar/micro-learning-app/main/docs/images/studio-fr.webp',
+    d: 'Pour les formateurs de toutes disciplines : transformer un support de cours en diaporama interactif, exportable en SCORM pour Moodle ou tout autre LMS.' },
+  { n: 'capital-lab', t: 'Capital Lab', site: 'https://edu-fpar.github.io/capital-lab/', img: 'https://raw.githubusercontent.com/edu-fpar/capital-lab/main/capital-lab-libre.png',
+    d: 'Écoles de commerce, finance, droit des sociétés : comment on peut contrôler une société en étant minoritaire (participations, pactes, droits de vote double).' },
+  { n: 'contract-lab', t: 'Contract Lab', site: 'https://edu-fpar.github.io/contract-lab/', img: 'https://raw.githubusercontent.com/edu-fpar/contract-lab/main/contract-lab.png',
+    d: 'Formations RH et droit du travail : construire un contrat clause par clause, voir les garde-fous qui la rendent valable, dérouler les ruptures pas à pas. Droit français et anglais.' },
+  { n: 'sql-lab', t: 'SQL Lab', site: 'https://edu-fpar.github.io/sql-lab/', img: 'https://raw.githubusercontent.com/edu-fpar/sql-lab/main/docs/img/fr/cinema-sql.png',
+    d: 'DCG (UE8), BTS, licence : s\'entraîner au SQL sur les annales du DCG, avec résultat comparé à l\'attendu, diagnostic des erreurs et correction animée.' },
+  { n: 'perspective-grid', t: 'Regards croisés', site: 'https://edu-fpar.github.io/perspective-grid/', img: 'https://raw.githubusercontent.com/edu-fpar/perspective-grid/main/docs/images/comparaison-devoilement-fr.png',
+    d: 'Toutes disciplines : comment plusieurs points de vue classent différemment les mêmes éléments. Une grille se crée avec n\'importe quelle IA.' },
+  { n: 'star-nav', t: 'Star Nav', site: 'https://edu-fpar.github.io/star-nav/#niveau-1', img: 'https://raw.githubusercontent.com/edu-fpar/star-nav/main/screenshots/hero-fr.png',
+    d: 'Enfants dès 8 ans : la gravité et les trajectoires sans une seule équation, en 31 niveaux de navigation spatiale.' },
+  { n: 'strange-mind', t: 'Strange Mind', site: 'https://edu-fpar.github.io/strange-mind/v4/#6', img: 'https://raw.githubusercontent.com/edu-fpar/strange-mind/main/screenshots/changing-grid-fr.png',
+    d: 'Enfants dès 5 ans : des défis éclair pour sentir les rotations, les nombres complexes et les matrices, sans une seule formule.' },
+  { n: 'latin-ukulele', t: 'Ukulele Latino', site: 'https://edu-fpar.github.io/latin-ukulele/', img: 'https://raw.githubusercontent.com/edu-fpar/latin-ukulele/main/img/interface.png',
+    d: 'Apprentis musiciens de tous âges : un groupe virtuel (cumbia, bossa, swing, flamenco…) joue avec vous et accélère peu à peu. 106 exercices.' },
+].map(e => ({ ...e, c: 'edu', code: 'https://github.com/edu-fpar/' + e.n, edu: true }));
+
+/* Dépôts du compte fxpar (hors forks et hors dépôt de profil) */
+const REPOS = [{"n": "latin-ukulele", "t": "Ukulele Latino : entraîneur de rythme", "d": "Un groupe virtuel joue avec vous et affiche en direct l'accord et le coup de main droite : cumbia, bossa nova, flamenco… 106 exercices de rythme au ukulélé.", "c": "musique", "code": "https://github.com/edu-fpar/latin-ukulele", "site": "https://edu-fpar.github.io/latin-ukulele/", "img": "https://raw.githubusercontent.com/edu-fpar/latin-ukulele/main/img/interface.png", "y": "2026", "lang": "JavaScript", "edu": true}, {"n": "abcjs-fx", "t": "abcjs-fx : partitions qui jouent", "d": "Transforme un air écrit en texte simple (notation ABC) en partition affichée sur une page web, avec lecteur audio, recueil de morceaux et outils pour s'entraîner.", "c": "musique", "code": "https://github.com/fxpar/abcjs-fx", "site": "https://fxpar.github.io/abcjs-fx/", "img": "https://raw.githubusercontent.com/fxpar/abcjs-fx/main/images/abcjs-fx-fr.png", "y": "2026", "lang": "JavaScript"}, {"n": "music-toolbox", "t": "Boîte à outils musicale", "d": "Une collection de petits outils web pour travailler son instrument : modes, accords et cadences au ukulélé, percussions latines, métronome, rythme, recueils de partitions.", "c": "musique", "code": "https://github.com/fxpar/music-toolbox", "site": "https://fxpar.github.io/music-toolbox/", "img": "https://raw.githubusercontent.com/fxpar/music-toolbox/main/images/modes_musicaux_interactifs.png", "y": "2026", "lang": "JavaScript"}, {"n": "abcjs-tabs", "t": "Tablatures guitare et ukulélé pour abcjs", "d": "Permet d'écrire soi-même la corde et la case de chaque note pour afficher des tablatures de guitare ou de ukulélé exactes sous une partition web.", "c": "musique", "code": "https://github.com/fxpar/abcjs-tabs", "site": "https://fxpar.github.io/abcjs-tabs/", "img": "https://raw.githubusercontent.com/fxpar/abcjs-tabs/main/docs/images/demo-ukulele.png", "y": "2026", "lang": "JavaScript"}, {"n": "abcjs-wp-plugin", "t": "Partitions ABC dans WordPress", "d": "Extension WordPress qui affiche et fait jouer des partitions écrites en notation ABC dans un site, avec accordage ukulélé. Adaptation du module de Paul Rosen.", "c": "musique", "code": "https://github.com/fxpar/abcjs-wp-plugin", "site": "https://fxpar.github.io/abcjs-wp-plugin/", "img": null, "y": "2026", "lang": "JavaScript"}, {"n": "android_music_theory_games", "t": "Jeux de théorie musicale (Android)", "d": "Application Android hors ligne pour s'entraîner à la théorie musicale : métronome, intervalles, gammes, accords, grilles de blues, avec sons inclus.", "c": "musique", "code": "https://github.com/fxpar/android_music_theory_games", "site": null, "img": "https://raw.githubusercontent.com/fxpar/android_music_theory_games/main/screenshots/index.png", "y": "2025", "lang": null}, {"n": "abcNotationExHelper", "t": "Pages d'exercices musicaux", "d": "Petit outil qui transforme chaque zone de texte d'une page en partition avec lecteur audio, pour créer facilement des pages d'exercices de musique.", "c": "musique", "code": "https://github.com/fxpar/abcNotationExHelper", "site": "https://fxpar.github.io/abcNotationExHelper/", "img": null, "y": "2025", "lang": "JavaScript"}, {"n": "Ukulele", "t": "Ukulélé : tous les accords", "d": "Carte de tous les accords du ukulélé à télécharger en PDF (français et anglais), accompagnée d'une vidéo explicative sur YouTube.", "c": "musique", "code": "https://github.com/fxpar/Ukulele", "site": null, "img": null, "y": "2024", "lang": null}, {"n": "artifacts", "t": "Petits outils pour enseignants et formateurs", "d": "Une collection de petits outils web qui s'ouvrent dans le navigateur, sans installation : Moodle, Blackboard, supports de cours, tableaux, chinois… Les fichiers restent chez vous.", "c": "enseigner", "code": "https://github.com/fxpar/artifacts", "site": "https://fxpar.github.io/artifacts/", "img": null, "y": "2026", "lang": "HTML"}, {"n": "kid-games", "t": "Jeux pour enfants", "d": "Prototypes de jeux pour enfants, faits pour explorer des idées : Strange Mind fait manipuler des formes qui tournent pour approcher les maths dès 5 ans.", "c": "enseigner", "code": "https://github.com/fxpar/kid-games", "site": "https://fxpar.github.io/kid-games/", "img": null, "y": "2026", "lang": "JavaScript"}, {"n": "micro-learning-app", "t": "MicroLearn Studio", "d": "Transforme un support de cours en diaporama interactif (quiz, cartes à retourner, frises, schémas), à exporter sur clé USB ou dans une plateforme comme Moodle.", "c": "enseigner", "code": "https://github.com/edu-fpar/micro-learning-app", "site": "https://edu-fpar.github.io/micro-learning-app/", "img": "https://raw.githubusercontent.com/edu-fpar/micro-learning-app/main/docs/images/studio-fr.webp", "y": "2026", "lang": "JavaScript", "edu": true}, {"n": "regex-edu-games", "t": "Regex Arcade", "d": "Apprendre en jouant à rechercher du texte avec des motifs (expressions régulières) : une notion par niveau, dans une salle d'arcade en 3D ou un jardin de bulles plus calme.", "c": "enseigner", "code": "https://github.com/fxpar/regex-edu-games", "site": "https://fxpar.github.io/regex-edu-games/", "img": "https://raw.githubusercontent.com/fxpar/regex-edu-games/main/docs/screenshots/accueil-choix-univers.png", "y": "2026", "lang": "JavaScript"}, {"n": "easy-qualiopi", "t": "Qualiopi : éditeur de preuves", "d": "Application à installer sur son ordinateur pour rédiger, suivre et présenter les preuves Qualiopi d'un organisme de formation. Aucune donnée ne sort de la machine.", "c": "enseigner", "code": "https://github.com/fxpar/easy-qualiopi", "site": null, "img": "https://raw.githubusercontent.com/fxpar/easy-qualiopi/main/docs/captures/01_tableau_de_bord.png", "y": "2026", "lang": "Python"}, {"n": "Cours", "t": "Cours de bureautique et de données", "d": "Supports de cours en ligne : Excel, Word, Access, SQL, VBA, Power BI, Moodle, expressions régulières, avec vidéos et exercices.", "c": "enseigner", "code": "https://github.com/fxpar/Cours", "site": "https://fxpar.github.io/Cours/", "img": "https://raw.githubusercontent.com/fxpar/Cours/main/media/R%C3%A9ussir%20un%20examen%20Excel.png", "y": "2026", "lang": "JavaScript"}, {"n": "Aikido_Flashcard", "t": "Flashcards d'aïkido", "d": "Cinq petits quiz vidéo pour réviser les techniques d'aïkido et leur nom japonais.", "c": "enseigner", "code": "https://github.com/fxpar/Aikido_Flashcard", "site": "https://fxpar.github.io/Aikido_Flashcard/", "img": "https://raw.githubusercontent.com/fxpar/Aikido_Flashcard/main/Aikido-Flashcard.png", "y": "2025", "lang": "JavaScript"}, {"n": "interactive-epub-checker", "t": "Testeur de livres numériques interactifs", "d": "Un livre numérique (EPUB) de démonstration pour vérifier ce que votre liseuse accepte : notes, quiz, traductions masquables, texte vertical, formules.", "c": "enseigner", "code": "https://github.com/fxpar/interactive-epub-checker", "site": null, "img": "https://raw.githubusercontent.com/fxpar/interactive-epub-checker/master/screenshots/play1a.mp4.gif", "y": "2022", "lang": "HTML"}, {"n": "Classification", "t": "Jeu de classement", "d": "Activité de classement sans bonne ou mauvaise réponse : les étudiants regroupent des cartes pour découvrir un sujet avant le cours. Prototype pour une activité H5P.", "c": "enseigner", "code": "https://github.com/fxpar/Classification", "site": "https://fxpar.github.io/Classification/", "img": "https://user-images.githubusercontent.com/11584406/115981088-94c96680-a591-11eb-8a31-0e9e32f260fa.png", "y": "2021", "lang": "HTML"}, {"n": "Simple-voc-quiz", "t": "Quiz de vocabulaire tout simple", "d": "Cartes de révision minimalistes : on colle une liste de vocabulaire depuis un tableur et le quiz est prêt, même sans connexion internet.", "c": "enseigner", "code": "https://github.com/fxpar/Simple-voc-quiz", "site": "https://fxpar.github.io/Simple-voc-quiz/", "img": "https://raw.githubusercontent.com/fxpar/Simple-voc-quiz/main/simple-voc-quiz.png", "y": "2021", "lang": "HTML"}, {"n": "Simple-Force-Feed-Brain-Quiz", "t": "Quiz de vocabulaire « tout recommencer »", "d": "Quiz de vocabulaire à coller depuis un tableur, qui repart à la première question à chaque erreur pour forcer la mémorisation.", "c": "enseigner", "code": "https://github.com/fxpar/Simple-Force-Feed-Brain-Quiz", "site": null, "img": null, "y": "2021", "lang": "HTML"}, {"n": "MoodleDesignFr", "t": "Moodle Design", "d": "Tutoriels et vidéos pour embellir ses cours Moodle par simple copier-coller : en-têtes, listes, boutons, icônes, cartes, alertes. Avec un cours d'exemple à télécharger.", "c": "moodle", "code": "https://github.com/fxpar/MoodleDesignFr", "site": "https://fxpar.github.io/MoodleDesignFr/", "img": "https://i.ytimg.com/vi/Uz7XbIxHf-4/hqdefault.jpg", "y": "2022", "lang": "SCSS"}, {"n": "courseSel", "t": "courseSel : sélection de cours Moodle", "d": "Extension Firefox pour les administrateurs Moodle : sélectionner, désélectionner et rechercher des cours rapidement dans la page de gestion.", "c": "moodle", "code": "https://github.com/fxpar/courseSel", "site": null, "img": "https://raw.githubusercontent.com/fxpar/courseSel/master/__screenshots/courseSel-v1.1-screenshotFR.png", "y": "2022", "lang": "JavaScript"}, {"n": "MoodleDesignEn", "t": "Moodle Design (anglais)", "d": "Version anglaise des tutoriels Moodle Design : un cours d'exemple et des vidéos pour améliorer la présentation des pages Moodle.", "c": "moodle", "code": "https://github.com/fxpar/MoodleDesignEn", "site": null, "img": "https://i.ytimg.com/vi/yOdvQovYEZE/hqdefault.jpg", "y": "2022", "lang": null}, {"n": "OutilsMoodleFxp", "t": "Outils Moodle INSEEC U", "d": "Extension de navigateur qui modifie la présentation de Moodle pour INSEEC U, notamment pour laisser de la place au panier d'activités.", "c": "moodle", "code": "https://github.com/fxpar/OutilsMoodleFxp", "site": null, "img": null, "y": "2020", "lang": "JavaScript"}, {"n": "InseecUMoodleCompanion", "t": "Compagnon Moodle INSEEC U", "d": "Extension Firefox et Chrome qui allège les pages Moodle des écoles INSEEC U en masquant pied de page, bandeau ou menu latéral.", "c": "moodle", "code": "https://github.com/fxpar/InseecUMoodleCompanion", "site": null, "img": "https://raw.githubusercontent.com/fxpar/InseecUMoodleCompanion/master/screenshots/inseecUMoodleCompanion-fr.png", "y": "2020", "lang": "JavaScript"}, {"n": "courseSel-chrome", "t": "courseSel pour Chrome", "d": "Version Chrome de l'extension courseSel, pour sélectionner et rechercher des cours dans les pages d'administration de Moodle.", "c": "moodle", "code": "https://github.com/fxpar/courseSel-chrome", "site": null, "img": null, "y": "2019", "lang": "JavaScript"}, {"n": "markdown-to-bootstrap-pandoc-lua-filter", "t": "Du texte simple à de belles pages de cours", "d": "Convertit un texte simple en page web soignée (bandeaux, quiz, carrousels, onglets), pratique pour créer vite des cours Moodle attrayants. Fonctionne avec le logiciel Pandoc.", "c": "documents", "code": "https://github.com/fxpar/markdown-to-bootstrap-pandoc-lua-filter", "site": "https://fxpar.github.io/markdown-to-bootstrap-pandoc-lua-filter/", "img": "https://raw.githubusercontent.com/fxpar/markdown-to-bootstrap-pandoc-lua-filter/main/media/jumbotron.png", "y": "2022", "lang": "HTML"}, {"n": "markdown-to-bootstrap", "t": "Du texte simple aux composants web : la spécification", "d": "Liste des conventions d'écriture en texte simple (Markdown) qui deviennent des éléments web : bandeaux, carrousels, onglets, cartes.", "c": "documents", "code": "https://github.com/fxpar/markdown-to-bootstrap", "site": "https://fxpar.github.io/markdown-to-bootstrap/", "img": null, "y": "2022", "lang": null}, {"n": "social-networks-pandoc-lua-filter", "t": "Liens de partage sur les réseaux sociaux", "d": "Ajoute automatiquement à un document converti par Pandoc des liens pour partager une page sur Facebook, LinkedIn, WhatsApp, etc.", "c": "documents", "code": "https://github.com/fxpar/social-networks-pandoc-lua-filter", "site": null, "img": "https://raw.githubusercontent.com/fxpar/social-networks-pandoc-lua-filter/main/media/share.png", "y": "2022", "lang": "HTML"}, {"n": "bootstrap-pandoc-template", "t": "Modèle de page pour Pandoc", "d": "Modèle qui habille un document converti par le logiciel Pandoc d'une mise en page web soignée, avec table des matières latérale.", "c": "documents", "code": "https://github.com/fxpar/bootstrap-pandoc-template", "site": null, "img": null, "y": "2022", "lang": "HTML"}, {"n": "PowerAutomateWord", "t": "Publipostage Word avec Power Automate", "d": "Fichier Word modèle pour faire un publipostage dans le cloud avec Power Automate, accompagné d'une vidéo.", "c": "documents", "code": "https://github.com/fxpar/PowerAutomateWord", "site": null, "img": "https://i.ytimg.com/vi/gZQ0tWZTHiI/hqdefault.jpg", "y": "2022", "lang": null}, {"n": "dcg-ue8", "t": "Réussir le DCG 8", "d": "Ressources libres pour préparer l'épreuve de systèmes d'information du DCG : annales, exercices Excel, VBA, SQL, référentiel de compétences pour Moodle.", "c": "sql", "code": "https://github.com/fxpar/dcg-ue8", "site": null, "img": "https://raw.githubusercontent.com/fxpar/dcg-ue8/main/xtras/couverture.jpg", "y": "2023", "lang": null}, {"n": "SQLpratique", "t": "SQL Pratique", "d": "Exercices de SQL de question en question, avec résultat attendu et correction à dévoiler, sans compte ni note. À installer sur un serveur web.", "c": "sql", "code": "https://github.com/fxpar/SQLpratique", "site": null, "img": "https://raw.githubusercontent.com/fxpar/SQLpratique/main/res/screenshot-mobile-01.png", "y": "2023", "lang": "PHP"}, {"n": "h5p-apps", "t": "Activités SQL interactives", "d": "Deux modules en ligne pour apprendre le SQL avec vidéo et quiz intégrés : découverte, puis requêtes sur plusieurs tables.", "c": "sql", "code": "https://github.com/fxpar/h5p-apps", "site": "https://fxpar.github.io/h5p-apps/", "img": "https://raw.githubusercontent.com/fxpar/h5p-apps/main/apps/decouverte-sql/Image.png", "y": "2022", "lang": "JavaScript"}, {"n": "DCG-Annales-SQL", "t": "Annales SQL du DCG", "d": "Bases de données des annales de l'épreuve « Système d'information » du DCG, pour s'entraîner aux requêtes SQL avec un logiciel gratuit.", "c": "sql", "code": "https://github.com/fxpar/DCG-Annales-SQL", "site": null, "img": "https://raw.githubusercontent.com/fxpar/DCG-Annales-SQL/master/screenshots/2019Structure.png", "y": "2021", "lang": null}, {"n": "JPlus", "t": "J+1 : la date de demain", "d": "Extension Chrome ou Firefox qui écrit la date du lendemain (ou du lundi si l'on est vendredi) dans la zone de texte où l'on tape.", "c": "extensions", "code": "https://github.com/fxpar/JPlus", "site": null, "img": null, "y": "2019", "lang": "JavaScript"}, {"n": "JPlusOptions", "t": "J+1 avec options", "d": "Variante de J+1 avec une page de réglages pour choisir le format de la date : français, anglais ou chinois.", "c": "extensions", "code": "https://github.com/fxpar/JPlusOptions", "site": null, "img": null, "y": "2019", "lang": "JavaScript"}, {"n": "JPlusSimple", "t": "J+1 version simple", "d": "Version la plus simple de J+1 : écrit la date du lendemain dans la zone de texte en cours.", "c": "extensions", "code": "https://github.com/fxpar/JPlusSimple", "site": null, "img": null, "y": "2019", "lang": "JavaScript"}, {"n": "hpSelection", "t": "hpSelection : exporter Hyperplanning", "d": "Extension Firefox expérimentale qui permet de sélectionner le contenu d'une page Hyperplanning, surtout pour copier les données vers Excel.", "c": "extensions", "code": "https://github.com/fxpar/hpSelection", "site": null, "img": null, "y": "2019", "lang": "JavaScript"}, {"n": "Wang_Fuzhi-Zhouyi_Neizhuan", "t": "Wang Fuzhi : commentaire du Yijing", "d": "Traduction française du Zhouyi Neizhuan de Wang Fuzhi, commentaire classique du Livre des mutations, à lire en ligne chapitre par chapitre ou en livre numérique.", "c": "langues-culture", "code": "https://github.com/fxpar/Wang_Fuzhi-Zhouyi_Neizhuan", "site": "https://fxpar.github.io/Wang_Fuzhi-Zhouyi_Neizhuan/", "img": null, "y": "2026", "lang": "HTML"}, {"n": "Unofficial-Chineseskill-Companion-Quiz", "t": "Quiz de chinois (compagnon ChineseSkill)", "d": "Quiz hors ligne pour réviser l'écriture des caractères chinois et les tons, en complément de l'application ChineseSkill.", "c": "langues-culture", "code": "https://github.com/fxpar/Unofficial-Chineseskill-Companion-Quiz", "site": null, "img": "https://raw.githubusercontent.com/fxpar/Unofficial-Chineseskill-Companion-Quiz/master/screenshots/screen_20200726_134536.png", "y": "2020", "lang": "JavaScript"}, {"n": "quiz2019", "t": "Quiz de caractères chinois (PHP)", "d": "Essai de création de quiz de vocabulaire chinois avec une interface de style Material Design.", "c": "langues-culture", "code": "https://github.com/fxpar/quiz2019", "site": null, "img": "https://raw.githubusercontent.com/fxpar/quiz2019/master/screenshot1.png", "y": "2019", "lang": "PHP"}, {"n": "smart-nego", "t": "SmartNego : négocier clause par clause", "d": "Essai d'interface pour négocier un contrat clause par clause : chaque partie accepte, refuse ou fait une contre-proposition jusqu'à l'accord complet.", "c": "autres", "code": "https://github.com/fxpar/smart-nego", "site": "https://fxpar.github.io/smart-nego/", "img": "https://raw.githubusercontent.com/fxpar/smart-nego/main/docs/captures/vue-mobile-nuit.png", "y": "2026", "lang": "JavaScript"}, {"n": "docs-badge", "t": "Mes photos de famille", "d": "Application pour trier, dédoublonner et étiqueter des photos d'actes et de documents familiaux, pensée pour les personnes âgées. Tout reste sur l'ordinateur.", "c": "autres", "code": "https://github.com/fxpar/docs-badge", "site": "https://fxpar.github.io/docs-badge/", "img": "https://raw.githubusercontent.com/fxpar/docs-badge/main/docs/captures/01-etiquetage.png", "y": "2026", "lang": "HTML"}, {"n": "suivi-fond-bibliotheque", "t": "Suivi de fonds de bibliothèque", "d": "Outil pour les bibliothécaires : à partir d'un export Excel du catalogue, il montre ce qui sort peu ou beaucoup et propose quoi retirer, remplacer ou renforcer.", "c": "autres", "code": "https://github.com/fxpar/suivi-fond-bibliotheque", "site": "https://fxpar.github.io/suivi-fond-bibliotheque/", "img": null, "y": "2026", "lang": "JavaScript"}, {"n": "python-artefacts", "t": "Petits scripts Python pratiques", "d": "Scripts à lancer sur son ordinateur pour automatiser des tâches : signets de gros PDF de partitions, alléger des PDF, créer des dossiers, petites applis de démonstration.", "c": "autres", "code": "https://github.com/fxpar/python-artefacts", "site": "https://fxpar.github.io/python-artefacts/", "img": null, "y": "2026", "lang": "Python"}, {"n": "xml-html-renamer", "t": "Renommer des balises XML/HTML", "d": "Petit script (page web et Java) qui parcourt un fragment XML ou HTML pour renommer ou modifier ses éléments.", "c": "autres", "code": "https://github.com/fxpar/xml-html-renamer", "site": null, "img": "https://raw.githubusercontent.com/fxpar/xml-html-renamer/master/screenshots/screen_20191231_212330.png", "y": "2019", "lang": "Java"}, {"n": "EmptyExtensionTemplate", "t": "Modèle d'extension vide", "d": "Modèle de départ pour une extension Chrome ou Firefox à un seul bouton.", "c": "essais", "code": "https://github.com/fxpar/EmptyExtensionTemplate", "site": null, "img": null, "y": "2019", "lang": "JavaScript"}, {"n": "ionic-todo", "t": "ionic-todo", "d": "Exercice de liste de tâches réalisé avec le framework mobile Ionic.", "c": "essais", "code": "https://github.com/fxpar/ionic-todo", "site": null, "img": null, "y": "2018", "lang": "TypeScript"}, {"n": "resp", "t": "resp", "d": "Essai de mise en page adaptative (dépôt vide).", "c": "essais", "code": "https://github.com/fxpar/resp", "site": null, "img": null, "y": "2015", "lang": null}, {"n": "responsive", "t": "responsive", "d": "Collection de modèles de sites adaptatifs pour des tests de design.", "c": "essais", "code": "https://github.com/fxpar/responsive", "site": null, "img": null, "y": "2015", "lang": "CSS"}, {"n": "test2", "t": "test2", "d": "Premier test de dépôt GitHub (README seul).", "c": "essais", "code": "https://github.com/fxpar/test2", "site": "https://fxpar.github.io/test2/", "img": null, "y": "2015", "lang": null}];
+
+const CATEGORIES = [
+  { id: 'edu', title: 'Outils pédagogiques', icon: '🎓',
+    intro: 'Mes outils principaux, regroupés sur le compte <a href="https://github.com/edu-fpar">edu-fpar</a> : pour l\'enseignement supérieur, la formation professionnelle et les enfants. Chacun est archivé sur Zenodo avec un DOI, pour pouvoir le citer.' },
+  { id: 'enseigner', title: 'Enseigner et former', icon: '🧑‍🏫', intro: 'Outils, quiz et supports de cours pour les enseignants, les formateurs et leurs élèves.' },
+  { id: 'musique', title: 'Musique', icon: '🎵', intro: 'Partitions qui jouent, tablatures, ukulélé et théorie musicale.' },
+  { id: 'moodle', title: 'Moodle', icon: '🎒', intro: 'Embellir ses cours Moodle et gagner du temps dans l\'administration de la plateforme.' },
+  { id: 'sql', title: 'SQL et DCG', icon: '🗄️', intro: 'Préparer l\'épreuve de systèmes d\'information du DCG et s\'entraîner aux requêtes SQL.' },
+  { id: 'documents', title: 'Pages de cours et documents', icon: '📄', intro: 'Transformer un texte simple en belle page web, publier et partager des documents.' },
+  { id: 'langues-culture', title: 'Chinois et traduction', icon: '🀄', intro: 'Réviser le chinois, et ma traduction d\'un commentaire classique du Yijing.' },
+  { id: 'extensions', title: 'Extensions de navigateur', icon: '🧩', intro: 'Petits boutons pour Chrome ou Firefox qui évitent des gestes répétitifs.' },
+  { id: 'autres', title: 'Autres projets', icon: '🛠️', intro: 'Bibliothèques, photos de famille, scripts : des outils nés d\'un besoin précis.' },
+  { id: 'essais', title: 'Essais et modèles', icon: '🧪', intro: 'Premiers tests et modèles de départ, gardés pour mémoire.', table: true },
+];
+
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const all = [...EDU, ...REPOS.filter(r => !r.edu)];
+const byCat = id => all.filter(r => r.c === id);
+const catOf = id => CATEGORIES.find(c => c.id === id);
+const haystack = r => (r.t + ' ' + r.n + ' ' + r.d + ' ' + catOf(r.c).title + ' ' + (r.lang || '')).toLowerCase();
+
+function card(r) {
+  const main = r.site || r.code;
+  const thumb = r.img
+    ? `<img src="${esc(r.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:'${catOf(r.c).icon}'}))">`
+    : `<div class="ph">${catOf(r.c).icon}</div>`;
+  const chips = [r.edu ? '<span class="chip edu">edu-fpar · DOI</span>' : '', r.lang ? `<span class="chip">${esc(r.lang)}</span>` : '', r.y ? `<span class="chip">${esc(r.y)}</span>` : ''].join('');
+  return `
+    <article class="card" id="p-${esc(r.n)}" data-search="${esc(haystack(r))}">
+      <a class="thumb" href="${esc(main)}" tabindex="-1" aria-hidden="true">${thumb}</a>
+      <div class="card-body">
+        <h3><a href="${esc(main)}">${esc(r.t)}</a></h3>
+        <p>${esc(r.d)}</p>
+        ${chips ? `<div class="chips">${chips}</div>` : ''}
+        <div class="links">
+          ${r.site ? `<a href="${esc(r.site)}">Ouvrir →</a>` : ''}
+          <a href="${esc(r.code)}">Code et notice</a>
+        </div>
+      </div>
+    </article>`;
+}
+
+function table(list) {
+  return `<table><thead><tr><th>Dépôt</th><th>Contenu</th><th>Année</th></tr></thead><tbody>${list.map(r => `
+    <tr id="p-${esc(r.n)}" data-search="${esc(haystack(r))}"><td><a href="${esc(r.code)}">${esc(r.n)}</a></td><td>${esc(r.d)}</td><td>${esc(r.y)}</td></tr>`).join('')}
+  </tbody></table>`;
+}
+
+document.getElementById('projects').innerHTML = CATEGORIES.map(cat => {
+  const list = byCat(cat.id);
+  if (!list.length) return '';
+  return `
+  <section id="${cat.id}" data-cat>
+    <h2>${cat.icon} ${esc(cat.title)}</h2>
+    <p class="section-intro">${cat.intro}</p>
+    ${cat.table ? table(list) : `<div class="grid">${list.map(card).join('')}</div>`}
+  </section>`;
+}).join('');
+
+document.getElementById('nav').innerHTML = CATEGORIES.filter(c => byCat(c.id).length).map(cat => `
+  <div class="nav-group" data-navcat="${cat.id}">
+    <a href="#${cat.id}">${cat.icon} ${esc(cat.title)} <small>(${byCat(cat.id).length})</small></a>
+  </div>`).join('');
+
+/* ---- Recherche ---- */
+document.getElementById('search').addEventListener('input', e => {
+  const q = e.target.value.trim().toLowerCase();
+  let visible = 0;
+  document.querySelectorAll('[data-search]').forEach(el => {
+    const show = !q || el.dataset.search.includes(q);
+    el.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  document.querySelectorAll('[data-cat]').forEach(sec => {
+    const any = [...sec.querySelectorAll('[data-search]')].some(c => c.style.display !== 'none');
+    sec.style.display = any ? '' : 'none';
+    document.querySelector(`[data-navcat="${sec.id}"]`).style.display = any ? '' : 'none';
+  });
+  document.getElementById('empty').style.display = visible ? 'none' : 'block';
+});
+
+/* ---- Téléphone : fermer le menu après un clic ---- */
+document.getElementById('sidebar').addEventListener('click', e => {
+  if (e.target.closest('a')) document.body.classList.remove('nav-open');
+});
+
+/* ---- Rubrique active dans la navigation ---- */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    document.querySelectorAll('.nav-group a.active').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector(`.nav-group a[href="#${en.target.id}"]`);
+    if (link) link.classList.add('active');
+  });
+}, { rootMargin: '0px 0px -70% 0px' });
+document.querySelectorAll('[data-cat]').forEach(s => observer.observe(s));
+
+/* ---- Thème ---- */
+const root = document.documentElement;
+try { const saved = localStorage.getItem('fxpar.theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  root.dataset.theme = dark ? 'light' : 'dark';
+  try { localStorage.setItem('fxpar.theme', root.dataset.theme); } catch (e) {}
+});
+</script>
+</body>
+</html>
